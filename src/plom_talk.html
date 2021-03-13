@@ -1,0 +1,710 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/theme/solarized.min.css">
+      <style>
+      .reveal h3 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+      .reveal th, td {
+        font-size: 1.66em;
+      }
+      .reveal {
+        color: #303030;
+      }
+      </style>
+
+    </head>
+      <body>
+        <div class="reveal">
+          <div class="slides">
+            <section>
+              <section>
+                <image width="30%" src="./images/plomLogo.svg"/>
+                <h2>PLOM &mdash; Paperless Open Marking</h2>
+                <h3>A libre online marking system</h3>
+                <h5>20th March 2021</h5>
+                <h5 align="center">Student presenters </h5>
+                <table>
+                  <tr>
+                    <th align="center" style="border-bottom: 0px;">Dryden Wiebe</th>
+                    <th align="center" style="border-bottom: 0px;">Vala Vakillian</th>
+                    <th align="center" style="border-bottom: 0px;">Victoria Schuster</th>
+                  </tr>
+                </table>
+                <h5 align="center">Faculty supervisors</h5>
+                <table>
+                  <tr>
+                    <th align="center" style="border-bottom: 0px;">Andrew Rechnitzer</th>
+                    <th align="center" style="border-bottom: 0px;">Colin Macdonald</th>
+                  </tr>
+                  <tr>
+                    <td align="center" style="border-bottom: 0px;">
+                      <a href="https://www.plomgrading.org">www.plomgrading.org</a>
+                    </td>
+                    <td align="center" style="border-bottom: 0px;">
+                      <a href="https://gitlab.com/plom/plom">gitlab.com/plom/plom</a>
+                    </td>
+                  </tr>
+                </table>
+              </section>
+              <section>
+                <h2>Who we are</h2>
+                <ul>
+                  We are undergraduate students at the University of British Columbia had the opportunity to contribute to PLOM during summer 2020 (and beyond)
+                </ul>
+                <ul>
+                  <li class="fragment">Dryden &mdash; Computer Engineering Student</li>
+                  <li class="fragment">Vala &mdash; Computer Engineering Student</li>
+                  <li class="fragment">Victoria &mdash; Enginnering Physics Student</li>
+                </ul>
+              </section>
+              <section>
+                <h2>Creators</h2>
+                <ul>
+                  PLOM was created by Andrew Rechnitzer and Colin Macdonald, professors of mathematics at UBC
+                </ul>
+              </section>
+              <section>
+                <image width="25%" src="./images/plomLogo.svg"/>
+                <h2>It takes a village</h2>
+                <h3 align="left">Thanks (based on the &ldquo;git log&rdquo;)</h3>
+                <!-- loc count from "pygount" -->
+                <pre>
+    # git log --format="%aN" | sort -u                       5584 commits, 25537 lines of Python
+        Andreas Buttenschoen
+        Andrew Rechnitzer
+        Colin B. Macdonald                                   Many thanks to the students (*)
+    (*) Dryden Wiebe                                         who have contributed!
+    (*) Elvis Cai
+        Elyse Yeager
+    (*) Forest Kobayashi
+        Jenny Li
+        John Hsu
+        Kevin Macdonald                                      Special notice:
+        Matthew Coles                                          CTLT Small TLEF
+        Michael Zhang                                          Noureddine Elouazizi
+        Omer Angel                                             Clarence Ho
+    (*) Peter Lee                                              The Ha, et al @ Math IT
+    (*) Vala Vakilian                                          Sathish Gopalakrishnan
+    (*) Victoria Schuster                                      Eric Cytrynbaum
+        Vinayak Vatsal
+                </pre>
+
+      <h3 align="left">and the many people who have marked using Plom</h3>
+</section>
+
+              <section>
+                <h2>Outline</h2>
+                <ul>
+                  <!--<li>What is Plom?</li>-->
+                  <!--<li>Who we are</li>-->
+                  <li>History and motivation</li>
+                  <li>A quick demo</li>
+                  <li>Plom work flow</li>
+                  <li>The move online</li>
+                  <li>Student involvement</li>
+                  <li>PLOM as free software</li>
+                  <li>Getting students involved with free software</li>
+                  <!--li>Interactive demo and question time</li>-->
+                </ul>
+              </section>
+            </section>
+            <section>
+              <section>
+                <h2>History and motivation</h2>
+                <h3>What were Colin and Andrew thinking &hellip;</h3>
+                <ul>
+                  <li class="fragment">Andrew &mdash; I need lots of versions
+                    (without burning out my teaching team)</li>
+                  <li class="fragment">Colin &mdash; I need to return these tests
+                    (without meeting humans, in 2018!)</li>
+                </ul>
+              </section>
+              <section>
+                <h2>For Andrew, it started with a midterm&hellip;</h2>
+                <div align="left">
+                  <h3>February 2018, Mathematics-101</h3>
+                  <ul>
+                    <li>1250 students in 8 sections, Thurs 09:30 &mdash; Fri 16:00</li>
+                    <li>Classrooms packed &mdash; cannot space students</li>
+                    <li>Multiple seatings required</li>
+                    <li>Outside regular hours not feasible (many reasons)</li>
+                  </ul>
+                </div>
+                <div align="left" class="fragment">
+                  <h3>Solution (far from optimal)</h3>
+                  <ul>
+                    <li>3 versions for Thursday and another 3 versions for Friday</li>
+                    <li>Less
+                      <q>leakage</q>
+                      at the expense of increased logistics</li>
+                    <li>Drafting and harmonising the tests was a multi-week process</li>
+                    <li>Far too many hours spent on ad-hoc management by instructor in charge</li>
+                    <li class="fragment">
+                      <span style="color: red">Not sustainable</span>
+                    </li>
+                  </ul>
+                </div>
+              </section>
+              <!--<section>
+                <h2>What can we change?</h2>
+                <div align="left">
+                  <h3>Hardest to easiest</h3>
+                  <ul>
+                    <li>(extreme) number and size of classrooms, number of seatings </li>
+                    <li>(moderate) quality and consistency of feedback</li>
+                    <li>(moderate) paper handling logistics</li>
+                    <li>(easy) reduce number of versions</li>
+                  </ul>
+                  <h3 class="fragment">Just write some software &hellip; how hard can it be?</h3>
+                  <ul class="fragment">
+                    <li>September: interleaving &check; paper-handling reduced &check; marker-logistics simplified &check;</li>
+                    <li>October: used on 350
+                      <span style="color: red">real</span>
+                      midterm tests</li>
+                    <li class="fragment">System usable by anyone else???</li>
+                  </ul>
+                </div>
+              </section>-->
+              <!--<section>
+                <h2>For Colin, it started with a midterm&hellip;</h2>
+              </section>-->
+              <section>
+                <h2>For Colin, it started with a midterm</h2>
+                <div align="left">
+                  <h3>Sept 2018, Colin (and others) teaching Math 253</h3>
+                  <ul>
+                    <li>Mark teaching online <!-- via lightboard-->
+                      due to <strike>Covid19</strike>
+                      <em>insufficient classrooms</em>
+                    </li>
+                    <!--<li>
+                      In a reversal of the natural order,
+                      <em>Colin</em>
+                      is (Instructor) in Charge of
+		      <em>Mark</em>.</li>-->
+	            <li><!--Mark's-->midterm needs to be returned, without physically meeting students.</li>
+                  </ul>
+                </div>
+                <div align="left">
+                  <h3 class="fragment">You
+                    <q>just</q>&nbsp;
+                    need to put a few pdf files on the web, right?</h3>
+                  <ul class="fragment">
+                    <li>add secret code to each filename, put on web:<br />
+                        <a href="https://amcweb.math.ubc.ca/~cbm/return/midterm1_SID_564711384.pdf">https://amcweb.math.ubc.ca/~cbm/return/midterm1_SID_564711384.pdf</a>
+                    </li>
+                    <li>distribute code as Canvas <q>assignment</q> mark:</br >
+                      <q>you got <b>564,711,384/999,999,999</b> on the <em>Test Return Code</em> assignment!</q>
+                    </li>
+                    <li>Student goes to simple auto-generated website:</br >
+                      <img src="images/digital_return_code.png" />
+                    </li>
+                    <li>We still use similar ideas to return papers and distribute individualized assessment.</li>
+                    </ul>
+                </section>
+              </section>
+              <section>
+              <section>
+                <h2>End of 2018</h2>
+                <div align="left">
+                  <h3>Plom used in 5 courses for $\approx$ 2500 papers.</h3>
+                </div>
+                <div align="left" class="fragment">
+                  <h3>Basic workflow functional</h3>
+                  <ul>
+                    <li>Generating tests with randomized versions, printing</li>
+                    <!--<li>Students write exam-->
+                    <li>Scanning, uploading</li>
+                    <li>Simultaneous grading by large team of TAs (demo next!)</li>
+                    <li>Baby steps towards Canvas integration</li>
+                  </ul>
+                </div>
+                <div align="left" class="fragment">
+                  <h3>Development</h3>
+                  <ul>
+                    <li>Much code improvement and clean-up (less
+                      <q>Andrew</q>, more standard python)</li> <!-- Is there a better but still self-deprecating thing to say? -->
+                    <li>Better use of version control and issue tracking via Gitlab</li>
+                    <li>Three contributors:</li>
+                    <quote><!-- code loc from pygount -->
+                      <pre>
+  # git log --format="%aN" | sort -u                 321 commits, 7421 lines of Python)
+      Andrew Rechnitzer
+      Colin B. Macdonald                             (*) student contributors
+  (*) Elvis Cai
+                      </pre>
+                      </quote>
+                  </ul>
+                </div>
+              </section>
+
+              <section>
+                <h2>Running Plom</h2>
+                <div align="left">
+                  <h3>Graders only need &ldquo;Plom Client&rdquo;</h3>
+                  <ul>
+                    <li>Single <tt>.exe</tt> download for GNU/Linux and other operating systems</li>
+                    <li>Variety of alternatives:<br />
+                      FlatHub, Arch, <tt>pip install plom</tt>, <!--(plus some non-python dependencies).-->
+                    <tt>git clone ...</tt>, etc etc.</li>
+                  </ul>
+                </div>
+                <div align="left" class="fragment">
+                  <h3>Server &mdash; options</h3>
+                  <ul>
+                    <li>Bare-metal GNU/Linux &mdash; install via <tt>pip</tt> and <tt>apt/dnf/pkg/...</tt></li>
+                    <li>Docker &mdash; easy download and run</li>
+                    <li>(students Liam and Jalal have server running on Windows WSL)</li>
+                  </ul>
+                </div>
+                <div align="left" class="fragment">
+                  <h3>Configuring and managing the server</h3>
+                  <ul>
+                    <li>Configuration &mdash; command-line and config files</li>
+                    <li>Managing &mdash; GUI manager-client and command-line</li>
+                  </ul>
+                </div>
+                <div align="left" class="fragment">
+                  <h3>Next task <q>just</q>&nbsp; simplify server for use by other humans...</h3>
+                </div>
+
+              </section>
+            </section>
+          </section>
+          <section>
+            <section>
+              <h2>Plom Client: marking demo</h2>
+              <h3>As experienced by graders</h3>
+              <img src="images/plomclient.png" width="75%"/>
+              <h3><a href="https://plomgrading.org/">www.plomgrading.org</a></h3>
+            </section>
+          </section>
+
+          <section>
+            <h2>Plom is Open</h2>
+            <div align="left" class="fragment">
+              <h3>Open source software from ground up</h3>
+              <ul>
+                <li>Libre &mdash; freely licensed (AGPLv3) and built from FOSS components</li>
+                <li>Gratis &mdash; no $, &euro;, &pound; or &#8383;</li>
+                <li>Respects our TAs and our students
+                <li>Source code and development is on a
+                  <a href="https://gitlab.com/plom/plom">public gitlab repository</a>
+                </li>
+                <li>AGPL means the code stays public</li>
+              </ul>
+            </div>
+            <div align="left" class="fragment">
+              <h3>Data stays on your server</h3>
+              <ul>
+                <li>Student privacy &mdash; no third parties involved</li>
+                <li>
+                  <span style="color: red">Pedagogical potential</span>
+                  &mdash; analysis of rubric data
+                  <ul class="fragment">
+                    <li>For instructor &mdash; auto-generate list of most common issues</li>
+                    <li>For student &mdash; auto-generate personalised feedback based on rubrics</li>
+                  </ul>
+                  <span class="fragment" style="color: red">Help Wanted &mdash; ideas and collaborators welcome</span>
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section>
+            <section>
+              <h2>Plom workflow: running a test</h2>
+              <div align="left">
+                <h3>Test specification</h3>
+                <ul>
+                  <li>test name, how many pages, questions, and versions</li>
+                  <li>how many to name, how many to print</li>
+                  <li>each question: what pages, max score, how to choose from sources</li>
+                </ul>
+              </div>
+              <div class="fragment">
+                <h3 align="left">Build and print PDFs (in &ldquo;The Before Time&rdquo;)</h3>
+                <table>
+                <tr>
+                  <td align="center">
+                    <img src="images/exam_0007.1.jpeg" width="90%"/></td>
+                  <td align="center">
+                    <img src="images/exam_0007.2.jpeg" width="90%"/></td>
+                  <td align="center">
+                    <img src="images/exam_0007.3.jpeg" width="90%"/></td>
+                  <td align="center">
+                    <img src="images/exam_0007.4.jpeg" width="90%"/></td>
+                </tr>
+                </table>
+              </div>
+            </section>
+            <section>
+              <h2>Plom workflow: running a test</h2>
+              <div align="left">
+                <h3>Feed test to students (and vice-versa)</h3>
+                <ul>
+                  <li>prenamed tests or students fill in ID page</li>
+                </ul>
+              </div>
+              <div align="left" class="fragment">
+                <h3>Carefully scan and upload the resulting papers</h3>
+                <ul>
+                  <li>in &ldquo;The Before Time&rdquo;: high-speed scanners, staple guillotine, etc
+                  <li>use a dependable TA</li>
+                  <li>system sorts scans (from QR-codes and by reading hand-written student numbers)</li>
+                </ul>
+              </div>
+              <div align="left" class="fragment">
+                <h3>Run your marking party with cheap pizza (in &ldquo;The Before Time&rdquo;)</h3>
+                <ul>
+                  <li>marking can be done anywhere</li>
+                  <li>&hellip;but we recommend the marking party approach</li>
+                  <li>manager-tools to oversee process</li>
+                </ul>
+              </div>
+
+              <div align="left" class="fragment">
+                <h3>Reassembly and return</h3>
+                <ul>
+                  <li>Scripts reassemble, build spreadsheet, <strike>build return webpage</strike>, push grades to Canvas.</li>
+                  <li>Recent Canvas-integration &mdash; return-link or PDF directly to student</li>
+                </ul>
+              </div>
+            </section>
+
+            <section>
+              <h2>Plom advantages</h2>
+              <div align="left" class="fragment">
+                <h3>Reduce versions by interleaving</h3>
+                <ul>
+                  <li>Make 3 source-versions of a 4-question test <br/>
+                    <img src="images/versioning1.svg" /> <br/>
+                  </li>
+                  <li>Plom can interleave different versions to build 3 &times; 3 &times; 3 &times; 3 = 81 possible tests
+                    <br/>
+                      <img src="images/versioning2.svg" />
+                  </li>
+                  <li>Plom handles production, distribution and reassembly</li>
+                </ul>
+              </div>
+              <div align="left" class="fragment">
+                <h3>Reduce paper-handling (&ldquo;The Before Times&rdquo;)</h3>
+                <ul>
+                  <li>Print and give test as normal &mdash; students write on paper</li>
+                  <li>After scanning there is no paper-handling &mdash; all electronic</li>
+                </ul>
+              </div>
+              <div align="left" class="fragment">
+                <h3>Improve quality and consistency of feedback</h3>
+                <ul>
+                  <li>Marker client encourages rubric use and re-use</li>
+                  <li>Rubric sharing and filtering</li>
+                </ul>
+              </div>
+            </section>
+          </section>
+
+          <section>
+            <section>
+              <h2>January 2020</h2>
+              <div align="left">
+              <h3 class="fragment">Usage: 19 courses and 10000 papers.</h3>
+              <div  class="fragment">
+                <h3>Contributors:</h3>
+                <!-- loc from "pygount" -->
+              <pre>
+  # git log --format="%aN" | sort -u                         1860 commits, 15970 lines of Python
+      Andrew Rechnitzer
+      Colin B. Macdonald                                     (*) students
+  (*) Elvis Cai
+      Elyse Yeager
+      John Hsu
+      Matthew Coles
+      Omer Angel
+      Vinayak Vatsal
+                </pre>
+              </div>
+              <h3 class="fragment">Workflow simple enough for graders.</h3>
+              <div  class="fragment">
+              <h3>Administrator work still arcane</h3>
+              <ul>
+                <li>difficult for person $\not\in$ {Andrew, Colin} to administer a test.</li>
+              </ul>
+              <h3 class="fragment">&hellip; bugs found and fixed</h3>
+            </div>
+            </section>
+            <section>
+              <h2>Something happened</h2>
+              <div align="left" class="fragment">
+                <h3>If you could move your class online by Monday, that'd be great</h3>
+              </div>
+              <div align="left" class="fragment">
+                <h3>Online lectures &mdash; a pauper's lightboard</h3>
+                <ul>
+                  <li>Hackery and fun with green-screen and OBS Studio (another talk)</li>
+                </ul>
+              </div>
+              <div align="left" class="fragment">
+                <h3>Online assessment</h3>
+                <ul>
+                  <li><span style="color: red">So many issues</span> &mdash; focus on logistics</li>
+                </ul>
+              </div>
+            </section>
+
+           <!-- <section>
+              <h2>Assessment logistics</h2>
+              <div align="left" class="fragment">
+                <h3>&ldquo;The Before Times&rdquo;</h3>
+                <ul>
+                  <li>Test distribution &mdash; lug test to classroom</li>
+                  <li>Student papers &mdash; very structured</li>
+                  <li>Instructor controls submission</li>
+                  <li>Instructor control over scan quality and format</li>
+                </ul>
+              </div>
+              <div align="left" class="fragment">
+                <h3>During Covid (&amp; &ldquo;The After Times&rdquo;?)</h3>
+                <ul>
+                  <li>Test distribution &mdash; Canvas, or link, or individualized links</li>
+                  <li>Student papers now unstructured (though mostly sensible)</li>
+                  <li>Student uploads scans to Canvas</li>
+                  <li>In practice, broad range of formats, sizes, etc</li>
+                </ul>
+              </div>
+              <div align="left" class="fragment">
+                <h3>Unstructured scans $\implies$ &ldquo;Homework Mode&rdquo;</h3>
+              </div> -->
+              <!-- TODO: next becomes bullet of homework mode? --> <!--
+              <div align="left" class="fragment">
+                <h3>Big server-side changes required &mdash; <span style="color: red">we need help</span></h3>
+              </div>
+            </section>-->
+        </section>
+
+        <section>
+          <section>
+            <h2>Student involvment</h2>
+            <div align="left" class="fragment">
+              <h3> This is where we come in </h3>
+              <h3> We were hired to contribute to PLOM during summer 2020 </h3>
+            </div>
+          </section>
+          <section>
+            <h2>Individual contributions</h2>
+          </section>
+          <section>
+            <h2>Dryden</h2>
+            <div align="left" class="fragment">
+              <h3> TODO </h3>
+            </div>
+          </section>
+          <section>
+            <h2>Vala</h2>
+            <div align="left" class="fragment">
+              <h3> TODO </h3>
+            </div>
+          </section>
+          <section>
+            <h2>Victoria </h2>
+            <div align="left" class="fragment">
+              <h3> TODO </h3>
+            </div>
+          </section>
+          <section>
+            <h2>All student involvment</h2>
+            <div align="left" class="fragment">
+              <h3>PLOM has so far been able to have many student contributors </h3>
+              <h3>Undergraduate</h3>
+                  <ul>
+                    <li>Elvis Cai &mdash; summer 2018</li>
+                    <li>Vala Vakilian &mdash; summer 2020</li>
+                    <li>Dryden Wiebe &mdash; summer 2020</li>
+                    <li>Victoria Schuster &mdash; summer 2020 and current</li>
+                    <li>Peter Lee &mdash; current</li>
+                  </ul>
+                <h3>Post-graduate</h3>
+                  <ul>
+                    <li>Forest Kobayashi &mdash; current</li>
+                    <li>Liam Yih &mdash; current</li>
+                    <li>Jalal Khouhak &mdash; current</li>
+                  </ul>
+            </div>
+        </section>
+      </section>
+
+        <section>
+          <section>
+            <h2>Exposing students to free software</h2>
+            <div align="left" class="fragment">
+              <h3> Students are the future creators and maintaners of free software </h3>
+              <ul>
+                <li>We all knew very little about Free Software before starting with PLOM</li>
+                <li>Mentors (Colin and Andrew) promoted the use of Free Software and it's ideals</li>
+                <li>We learned about diffrent lisences and reasons behind the choices for PLOM</li>
+              </ul>
+            </div>
+          </section>
+          <section>
+            <h2>Individual takeaways</h2>
+          </section>
+          <section>
+            <h2>Dryden</h2>
+            <div align="left" class="fragment">
+              <h3>  </h3>
+            </div>
+          </section>
+          <section>
+            <h2>Vala</h2>
+            <div align="left" class="fragment">
+              <h3> TODO </h3>
+            </div>
+          </section>
+          <section>
+            <h2>Victoria </h2>
+            <div align="left" class="fragment">
+              <h3> TODO </h3>
+            </div>
+          </section>
+      </section>
+
+      <section>
+        <section>
+          <h2>Involving students with free software</h2>
+          <div align="left" class="fragment">
+            <h3> How do you get students involved with free software projects? </h3>
+            <ul>
+              <li>Use it in the classroom (ie: tools like PLOM) and let the conversation start there</li>
+              <li>Use grants to hire students for projects, for example we were funded </li>
+              <li>Use your project as a candidate for a "capstone" course at your instituton</li>
+            </ul>
+          </div>
+        </section>
+    </section>
+
+    <section>
+      <section>
+        <image width="30%" src="./images/plomLogo.svg"/>
+        <h2>Thank you for your time!</h2>
+      </section>
+    </section>
+        <!-- <section>
+            <section>
+                <h3>Thoughts on community building</h3>
+                <p>FOSS sinks or swims by its community.</p>
+                <p>Lessons from GNU Octave and SymPy projects, Google Summer of Code.</p>
+                <div align="left" class="fragment">
+                  <ul>
+                    <li>We tag issues as <q>Good First Issue</q> and
+                    point people at these.</li>
+                  <li>We try to encourage students to learn enough Git
+                    to send a <q>Merge Request</q> (<q>MR</q>, a small
+                    unit of change).</li>
+                  <li>We then review that, gently.  Its more important
+                    to onboard people than get the code <q>perfect</q>
+                    at this point.</li>
+                  <li>We follow up with our own MR adding their name
+                    to the contributors list, copyright lists and so
+                    one, then ask them to <q>+1</q> our MR.</li>
+                  <ul>
+                 </div>
+            </section>
+          </section> -->
+
+          <!--<section>
+            <section>
+              <h2>Where to from here</h2>
+              <div align="left" class="fragment">
+                <h3>Better feedback, not faster grading</h3>
+                <ul>
+                  <li>TA training and software design to encourage use and reuse of rubrics</li>
+                  <li>Mechanisms for rubric evolution &mdash; no rubric survives contact with assessment</li>
+                  <li>Double-grading of some papers &mdash; help us be more consistent.</li>
+                  <li>Mine rubric data to build more engaging feedback
+                    <ul>
+                      <li>rubrics on paper $\implies$ suggested reading and exercises</li>
+                      <li>auto-generation of ComPAIR exercises</li>
+                    </ul>
+                  </li>
+                  <li>Potential integration with PrairieLearn (modern WeBWorK replacement).</li>
+                  <li>Javascript or Flutter client</li>
+                </ul>
+              </div>
+              <div align="left" class="fragment">
+                <h3>People</h3>
+                <ul>
+                  <li>Train TAs to be able to administer tests</li>
+                  <li>Student coding opportunities</li>
+                  <li>Pedagogical research</li>
+                  <li class="fragment"><span style="color: red">Community building</span> &mdash; life or death of an open-source project</li>
+                </ul>
+              </div>
+            </section>
+
+            <section>
+              <h2>Community building</h2>
+            <div align="left" class="fragment">
+              <h3>Do we want users?</h3>
+              <ul>
+                <li>Short answer = yes</li>
+                <li>Slightly longer answer = yes, if they don't mind getting their hands a little dirty</li>
+                <li>Suggestion = send us a TA and we'll send you back an expert!</li>
+              </ul>
+            </div>
+            <div align="left" class="fragment">
+              <h3>Do we need co-developers?</h3>
+              <ul>
+                <li>Short answer = yes</li>
+                <li>Slightly longer answer = definitely yes!</li>
+                <li>Suggestion = there are tasks for novices through to experts.</li>
+              </ul>
+            </div>-->
+
+            <!-- TODO
+            <div align="left" class="fragment">
+              <h3>Resources</h3>
+              <ul>
+                <li></li>
+              </ul>
+            </div>
+            --><!--
+            </section>-->          
+          <!--<section>
+            <section>
+              <h2>Demo: give it a try, questions, thoughts...</h2>
+              <ul>
+                <li>Client works on GNU/Linux, Windows and macOS</li>
+                <li>We'll paste the download / instructions URL into the chat window</li>
+                <li>DM us and we'll send you a password</li>
+                <li>Server: <b><tt>plom.math.ubc.ca:41984</tt></li>
+              </ul>
+                <img src="images/plom_chooser.png" />
+            </section>
+          </section>-->
+
+        </div>
+      </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/math/math.min.js" </script> <script src="https://cdn.jsdelivr.net/npm/headjs@1.0.3/dist/1.0.0/head.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.js"></script>
+    <script>
+      Reveal.initialize({
+        width: 1600, height: 1200, margin: 0.1,
+        // width: 1400, height: 1024, margin: 0.04, center: false,
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js',
+          config: 'TeX-AMS_HTML-full'
+        },
+        plugins: [RevealMath]
+      });
+    </script>
+    <style type="text/css">
+      p {
+        text-align: left;
+      }
+    </style>
+  </body>
+</html>
+
